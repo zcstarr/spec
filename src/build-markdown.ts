@@ -7,17 +7,23 @@ import {
   renderSections,
   toTitleCase,
 } from "./util";
-import schema from "../spec/schema.json";
+import toc from "markdown-toc";
+
+const replaceVersionComments = (s: string, version: string): string =>
+  s.replace("<!-- version -->", `Version ${version}`);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getDereffedSchema = async (): Promise<any> => {
+const getDereffedSchema = async (path: string): Promise<any> => {
+  let raw = "";
   try {
-    const deref = new Dereferencer(schema);
+    raw = fs.readFileSync(path, "utf8");
+    const s = JSON.parse(raw);
+    const deref = new Dereferencer(s);
     const dereffed = await deref.resolve();
     return dereffed;
   } catch (e) {
     console.error(
-      `Cannot parse meta-schema or dereference it. ${e instanceof Error ? e.message : 'Unknown error'} Recieved: ${schema}`
+      `Cannot parse meta-schema or dereference it. ${e instanceof Error ? e.message : "Unknown error"} Recieved: ${raw}`,
     );
   }
 };
@@ -118,17 +124,30 @@ const collectSections = (
   return sections;
 };
 
-const build = async () => {
-  const schema = await getDereffedSchema();
-  if (!schema) return;
+const parseVersionFromPath = (path: string): string => {
+  const versionMatch = path.match(/\/spec\/([\d.]+)\//);
+  const version = versionMatch ? versionMatch[1] : null;
+  if(!version) throw new Error(`Version not found in path: ${path}`);
+
+  return version;
+};
+
+export const build = async (path: string): Promise<string> => {
+  const schemaPath = path;
+  const version = parseVersionFromPath(schemaPath);
+
+
+  const schema = await getDereffedSchema(schemaPath);
+  if (!schema) throw new Error(`Schema not found in path: ${schemaPath}`);
 
   const sections = collectSections(schema, 0, new Set());
   const markdown = renderSections(sections);
 
-  const preamble = await fs.readFileSync("./src/template.md", "utf8");
-  fs.writeFileSync("./table.md", preamble + markdown);
-  console.log(markdown);
+  const preamble = await fs.readFileSync("./spec/spec-template.md", "utf8");
+  const composed_markdown = preamble + markdown;
+  const withToc = toc.insert(composed_markdown);
+  
+  const withVersion = replaceVersionComments(withToc, `${version}.x`);
+
+  return withVersion;
 };
-
-
-build();

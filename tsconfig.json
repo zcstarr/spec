@@ -1,9 +1,13 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "commonjs",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "lib": [
       "ESNext"
+    ],
+    "types": [
+      "bun-types"
     ],
     "declaration": true,
     "outDir": "./build",
