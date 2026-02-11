@@ -2,12 +2,25 @@
   "name": "test-open-rpc-spec",
   "version": "1.3.2",
   "description": "The OPEN-RPC Specification",
-  "main": "index.js",
-  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "validate": "mdv ./spec.md ./README.md ./build/markdown/*.md",
     "lint": "markdownlint ./spec.md ./README.md ./build/markdown/*.md",
     "build": "bun run src/build-main.ts",
+    "build:bundle": "bun run src/build-bundle.ts && tsc -p tsconfig.bundle.json",
     "test:unit": "bun test",
     "test": "bun run test:unit && bun run build && bun run validate && bun run lint"
   },
