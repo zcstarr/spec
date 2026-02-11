@@ -28,7 +28,7 @@ aliases:
 defaults: &defaults
   working_directory: ~/spec
   docker:
-    - image: cimg/node:18.13.0
+    - image: cimg/node:24.11.0
 
 jobs:
   test:
