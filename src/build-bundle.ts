@@ -5,6 +5,7 @@ const result = await build({
   outdir: "./dist",
   target: "browser",
   format: "esm",
+  minify: true,
 });
 
 if (!result.success) {
