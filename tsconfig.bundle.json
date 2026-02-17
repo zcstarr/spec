@@ -1,11 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "rootDir": "./src",
+    "rootDir": "./generated",
     "outDir": "./dist",
     "emitDeclarationOnly": true
   },
-  "include": [
-    "src/index.ts"
-  ]
+  "include": ["generated/index.ts"]
 }

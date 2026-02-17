@@ -20,7 +20,8 @@
     "validate": "mdv ./spec.md ./README.md ./build/markdown/*.md",
     "lint": "markdownlint ./spec.md ./README.md ./build/markdown/*.md",
     "build": "bun run src/build-main.ts",
-    "build:bundle": "bun run src/build-bundle.ts && tsc -p tsconfig.bundle.json",
+    "generate": "bun run src/generate-index.ts",
+    "build:bundle": "bun run generate && bun run src/build-bundle.ts && tsc -p tsconfig.bundle.json",
     "test:unit": "bun test",
     "test": "bun run test:unit && bun run build && bun run validate && bun run lint"
   },

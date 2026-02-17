@@ -1,7 +1,7 @@
 import { build } from "bun";
 
 const result = await build({
-  entrypoints: ["./src/index.ts"],
+  entrypoints: ["./generated/index.ts"],
   outdir: "./dist",
   target: "browser",
   format: "esm",
