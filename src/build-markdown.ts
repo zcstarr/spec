@@ -143,7 +143,7 @@ export const build = async (path: string): Promise<string> => {
   const sections = collectSections(schema, 0, new Set());
   const markdown = renderSections(sections);
 
-  const preamble = await fs.readFileSync("./spec/spec-template.md", "utf8");
+  const preamble = fs.readFileSync(`./spec/${version}/spec-template.md`, "utf8");
   const composed_markdown = preamble + markdown;
   const withToc = toc.insert(composed_markdown);
   
