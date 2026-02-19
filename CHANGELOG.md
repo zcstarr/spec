@@ -219,6 +219,29 @@
 
 * add link for latest version of spec ([ce8ecf0](https://github.com/open-rpc/spec/commit/ce8ecf0))
 
+## 1.4.0 (2026-02-19)
+
+### Features
+
+- wip this feature changes the repo to support inline schema in spec
+- wip types bundling
+
+### Fixes
+
+- markdownlint issues
+- examplePairingObject had a bad link for result
+- added error to examplePairingObject
+- wip first pass at updating to new schema.json to markdown rendering
+- add github actions deployment
+- adjust legacy scripts now deprecated to support new version layout
+- correct tests for the specs to validate that the specs are written properly
+- add support for a mapping to return that mapping of schemas
+- make sure to use snake_case
+- bundle refactor to use only versioned directories
+- auto generate the proper directory structure and index.ts for packaging the schema
+- add spec-template to be tied to version
+- gh pages bug
+
 # 1.0.0 (2019-04-01)
 
 
