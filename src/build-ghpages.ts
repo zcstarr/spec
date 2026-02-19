@@ -92,7 +92,8 @@ export const build = async () => {
       }
     }),
   );
-  await writeFile(`${buildDir}/CNAME`, "spec.open-rpc.org");
+  // temporarily disable CNAME file
+ // await writeFile(`${buildDir}/CNAME`, "spec.open-rpc.org");
 
   console.log("building docs complete. docs/ ready to deploy!");
 };
