@@ -82,8 +82,7 @@ export const build = async () => {
 
       await fsx.ensureDir(buildDirName);
 
-      const [filename] = await readdir(dirName);
-      const markdown = await buildMarkdown(`${dirName}/${filename}`);
+      const markdown = await buildMarkdown(`${dirName}/schema.json`);
       await writeFile(`${buildDirName}/index.md`, markdown);
 
       if (latestVersion === version) {
