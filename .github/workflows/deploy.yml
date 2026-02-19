@@ -23,9 +23,13 @@ jobs:
           bun-version: latest
       - run: bun install
       - run: bun run build
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: docs
+          destination: ./_site
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs
+          path: ./_site
 
   deploy:
     needs: build
