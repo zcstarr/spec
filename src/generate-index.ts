@@ -1,4 +1,4 @@
-import { readdirSync, mkdirSync, writeFileSync, statSync } from "fs";
+import { readdirSync, readFileSync, mkdirSync, writeFileSync, statSync } from "fs";
 import { copySync } from "fs-extra";
 import { join } from "path";
 
@@ -58,3 +58,23 @@ ${schemaEntries}
 
 writeFileSync(join(GENERATED_DIR, "index.ts"), indexContent);
 console.log("Generated generated/index.ts");
+
+// Patch package.json exports to expose individual schema JSONs from dist/
+const pkgPath = join(import.meta.dir, "..", "package.json");
+const pkg = JSON.parse(readFileSync(pkgPath, "utf-8"));
+
+const schemaExports: Record<string, string> = {};
+for (const version of versions) {
+  const dirName = toDirName(version);
+  schemaExports[`./${dirName}/schema.json`] = `./dist/${dirName}/schema.json`;
+}
+
+pkg.exports = {
+  ".": pkg.exports["."],
+  ...schemaExports,
+};
+
+pkg.files = ["dist"];
+
+writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
+console.log("Updated package.json exports with schema paths");

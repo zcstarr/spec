@@ -42,6 +42,13 @@ name = "document-change"
 [[workflows.steps]]
 type = "CreateChangeFile"
 
+[release_notes]
+change_templates = [
+    "- $summary ([`$commit_hash`](https://github.com/zcstarr/spec/commit/$commit_hash))",
+    "### $summary\n\n$details",
+    "- $summary",
+]
+
 [github]
 owner = "zcstarr"
 repo = "spec"
