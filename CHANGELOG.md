@@ -219,6 +219,14 @@
 
 * add link for latest version of spec ([ce8ecf0](https://github.com/open-rpc/spec/commit/ce8ecf0))
 
+## 1.6.1 (2026-02-20)
+
+### Fixes
+
+- gh pages deployment ([`46c9845`](https://github.com/zcstarr/spec/commit/46c9845))
+- update workflow for gh deploy ([`02e5107`](https://github.com/zcstarr/spec/commit/02e5107))
+- make sure we're exporting with 1_ ([`330fd89`](https://github.com/zcstarr/spec/commit/330fd89))
+
 ## 1.6.0 (2026-02-19)
 
 ### Features
