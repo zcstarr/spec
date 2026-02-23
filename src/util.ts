@@ -30,9 +30,9 @@ export const toTitleCase = (str: string): string =>
     .replace(/([a-z])([A-Z])/g, "$1 $2")
     .replace(/^./, (s) => s.toUpperCase());
 
-/** Generate anchor from parent title + field name */
-export const makeAnchor = (parentTitle: string, fieldName: string): string => {
-  const prefix = toKebabCase(parentTitle).replace(/-?object$/, "");
+/** Generate anchor from schema title + field name */
+export const makeAnchor = (schemaTitleRaw: string, fieldName: string): string => {
+  const prefix = toKebabCase(schemaTitleRaw).replace(/-?object$/, "");
   return `${prefix}-${toKebabCase(fieldName)}`;
 };
 
@@ -190,7 +190,7 @@ export const renderType = (schema: TypeInfo): PhrasingContent[] => {
     case "oneOf": {
       const parts: PhrasingContent[] = [];
       typeKind.variants.forEach((v, i) => {
-        if (i > 0) parts.push(text(" \\| "));
+        if (i > 0) parts.push(text(" | "));
         parts.push(...renderType(v));
       });
       return parts;
@@ -211,10 +211,10 @@ export interface FieldDef {
 }
 
 export const buildFieldCell = (
-  parentTitle: string,
+  schemaTitleRaw: string,
   fieldName: string
 ): TableCell => {
-  const anchor = makeAnchor(parentTitle, fieldName);
+  const anchor = makeAnchor(schemaTitleRaw, fieldName);
   return tableCell([html(`<a name="${anchor}"></a>`), text(fieldName)]);
 };
 
@@ -235,17 +235,17 @@ export const buildDescriptionCell = (
 };
 
 export const buildTableRow = (
-  parentTitle: string,
+  schemaTitleRaw: string,
   field: FieldDef
 ): TableRow => {
   return tableRow([
-    buildFieldCell(parentTitle, field.name),
+    buildFieldCell(schemaTitleRaw, field.name),
     buildTypeCell(field.schema),
     buildDescriptionCell(field.description, field.required),
   ]);
 };
 
-export const buildTable = (parentTitle: string, fields: FieldDef[]): Table => {
+export const buildTable = (schemaTitleRaw: string, fields: FieldDef[]): Table => {
   const headerRow = tableRow([
     tableCell([text("Field Name")]),
     tableCell([text("Type")]),
@@ -255,7 +255,7 @@ export const buildTable = (parentTitle: string, fields: FieldDef[]): Table => {
   return {
     type: "table",
     align: ["left", "center", "left"],
-    children: [headerRow, ...fields.map((f) => buildTableRow(parentTitle, f))],
+    children: [headerRow, ...fields.map((f) => buildTableRow(schemaTitleRaw, f))],
   };
 };
 
@@ -269,7 +269,7 @@ export const renderTable = (table: Table): string => {
 
 export interface Section {
   title: string;
-  parentTitle: string;
+  schemaTitleRaw: string;
   fields: FieldDef[];
   headingDepth: 1 | 2 | 3 | 4 | 5 | 6;
   description?: string;
@@ -280,7 +280,7 @@ export const renderSections = (sections: Section[]): string => {
   const children = sections.flatMap(
     ({
       title,
-      parentTitle,
+      schemaTitleRaw,
       fields,
       headingDepth,
       description,
@@ -297,7 +297,7 @@ export const renderSections = (sections: Section[]): string => {
         });
       }
 
-      nodes.push(buildTable(parentTitle, fields));
+      nodes.push(buildTable(schemaTitleRaw, fields));
 
       if (hasSpecExtensions) {
         nodes.push({

@@ -51,14 +51,21 @@ const extractFields = (schema: any): FieldDef[] => {
   });
 };
 
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const collectSections = (
   schema: any,
   depth: number,
-  visited: Set<string>
+  visited: Set<string>,
+  excludeTitles: Set<string>
 ): Section[] => {
   const title = schema.title || "object";
   if (visited.has(title)) return [];
+  if (excludeTitles.has(title)) {
+    debugger
+    visited.add(title);
+    return [];
+  }
   visited.add(title);
 
   const fields = extractFields(schema);
@@ -71,7 +78,7 @@ const collectSections = (
   const sections: Section[] = [
     {
       title: toTitleCase(title),
-      parentTitle: title,
+      schemaTitleRaw: title,
       fields,
       headingDepth,
       description: schema.description,
@@ -85,17 +92,17 @@ const collectSections = (
 
     // Direct object with properties
     if (propSchema?.properties) {
-      sections.push(...collectSections(propSchema, depth + 1, visited));
+      sections.push(...collectSections(propSchema, depth + 1, visited, excludeTitles));
     }
     // Array items with properties
     else if (propSchema?.items?.properties) {
-      sections.push(...collectSections(propSchema.items, depth + 1, visited));
+      sections.push(...collectSections(propSchema.items, depth + 1, visited, excludeTitles));
     }
     // Array items with oneOf
     else if (propSchema?.items?.oneOf) {
       for (const variant of propSchema.items.oneOf) {
         if (variant?.properties) {
-          sections.push(...collectSections(variant, depth + 1, visited));
+          sections.push(...collectSections(variant, depth + 1, visited, excludeTitles));
         }
       }
     }
@@ -103,7 +110,7 @@ const collectSections = (
     else if (propSchema?.oneOf) {
       for (const variant of propSchema.oneOf) {
         if (variant?.properties) {
-          sections.push(...collectSections(variant, depth + 1, visited));
+          sections.push(...collectSections(variant, depth + 1, visited, excludeTitles));
         }
       }
     }
@@ -116,7 +123,7 @@ const collectSections = (
         if (pattern === "^x-") continue;
         const pv = patternValue as any;
         if (pv?.properties) {
-          sections.push(...collectSections(pv, depth + 1, visited));
+          sections.push(...collectSections(pv, depth + 1, visited, excludeTitles));
         }
       }
     }
@@ -140,7 +147,8 @@ export const build = async (path: string): Promise<string> => {
   const schema = await getDereffedSchema(schemaPath);
   if (!schema) throw new Error(`Schema not found in path: ${schemaPath}`);
 
-  const sections = collectSections(schema, 0, new Set());
+  const excludedTitles = new Set(["JSONSchemaObject"]);
+  const sections = collectSections(schema, 0, new Set(), excludedTitles);
   const markdown = renderSections(sections);
 
   const preamble = fs.readFileSync(`./spec/${version}/spec-template.md`, "utf8");
