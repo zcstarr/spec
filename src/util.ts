@@ -190,7 +190,7 @@ export const renderType = (schema: TypeInfo): PhrasingContent[] => {
     case "oneOf": {
       const parts: PhrasingContent[] = [];
       typeKind.variants.forEach((v, i) => {
-        if (i > 0) parts.push(text(" \\| "));
+        if (i > 0) parts.push(text(" | "));
         parts.push(...renderType(v));
       });
       return parts;
