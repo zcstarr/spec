@@ -219,6 +219,13 @@
 
 * add link for latest version of spec ([ce8ecf0](https://github.com/open-rpc/spec/commit/ce8ecf0))
 
+## 1.6.2 (2026-02-23)
+
+### Fixes
+
+- filter out json schema object ([`ad9bb18`](https://github.com/zcstarr/spec/commit/ad9bb18))
+- remove extra pipe ([`3bcabf5`](https://github.com/zcstarr/spec/commit/3bcabf5))
+
 ## 1.6.1 (2026-02-20)
 
 ### Fixes
