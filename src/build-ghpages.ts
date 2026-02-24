@@ -89,7 +89,6 @@ export const build = async () => {
         await fsx.ensureDir(`${buildDir}/latest`);
         await writeFile(`${buildDir}/latest/index.md`, markdown);
         await writeFile(`${buildDir}/index.md`, markdown);
-        await writeFile(`${buildDir}/spec.md`, markdown);
       }
     }),
   );
