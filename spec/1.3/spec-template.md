@@ -65,7 +65,7 @@ The `major.minor` portion of the semver (for example `1.0.x`) SHALL designate th
 
 Subsequent minor version releases of the OpenRPC Specification (incrementing the `minor` version number) SHOULD NOT interfere with tooling developed to a lower minor version and same major version. Thus a hypothetical `1.1.0` specification SHOULD be usable with tooling designed for `1.0.0`.
 
-An OpenRPC document compatible with OpenRPC 1.0.0 contains a required [`openrpc`](#openrpc-version) field which designates the semantic version of the OpenRPC that it uses.
+An OpenRPC document compatible with OpenRPC 1.0.0 contains a required [`openrpc`](#openrpc-document-openrpc) field which designates the semantic version of the OpenRPC that it uses.
 
 # Format
 
