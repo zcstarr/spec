@@ -18,6 +18,7 @@ if (!result.success) {
   process.exit(1);
 }
 
+// eslint-disable-next-line no-console
 console.log("Bundle built successfully");
 
 const SPEC_DIR = join(import.meta.dir, "..", "spec");
@@ -34,6 +35,12 @@ for (const version of versions) {
   const dirName = toDirName(version);
   const destDir = join(DIST_DIR, dirName);
   mkdirSync(destDir, { recursive: true });
-  copyFileSync(join(SPEC_DIR, version, "schema.json"), join(destDir, "schema.json"));
-  console.log(`Copied spec/${version}/schema.json → dist/${dirName}/schema.json`);
+  copyFileSync(
+    join(SPEC_DIR, version, "schema.json"),
+    join(destDir, "schema.json"),
+  );
+  // eslint-disable-next-line no-console
+  console.log(
+    `Copied spec/${version}/schema.json → dist/${dirName}/schema.json`,
+  );
 }

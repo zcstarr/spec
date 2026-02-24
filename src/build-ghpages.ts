@@ -1,8 +1,8 @@
-import { mkdir, readdir, writeFile } from "fs/promises";
+import { readdir, writeFile } from "fs/promises";
 import fsx from "fs-extra";
 import downloadReleases from "@etclabscore/dl-github-releases";
 import { build as buildMarkdown } from "./build-markdown";
-import { discoverLatestVersion, getAllRecentVersions, getPackageVersion } from "./version";
+import { discoverLatestVersion, getAllRecentVersions } from "./version";
 
 const leaveZipped = false;
 
@@ -71,11 +71,13 @@ export const build = async () => {
     }),
   );
 
-  const latestVersion = discoverLatestVersion()
+  const latestVersion = discoverLatestVersion();
+  // eslint-disable-next-line no-console
   console.log(`latestVersion: ${latestVersion}`);
   const recentVersions = getAllRecentVersions();
   await Promise.all(
     recentVersions.map(async (version) => {
+      // eslint-disable-next-line no-console
       console.log(`building version: ${version}`);
       const dirName = `${specDir}/${version}`;
       const buildDirName = `${buildDir}/${version}`;
@@ -93,8 +95,9 @@ export const build = async () => {
     }),
   );
   // temporarily disable CNAME file
- // await writeFile(`${buildDir}/CNAME`, "spec.open-rpc.org");
+  // await writeFile(`${buildDir}/CNAME`, "spec.open-rpc.org");
 
+  // eslint-disable-next-line no-console
   console.log("building docs complete. docs/ ready to deploy!");
 };
 

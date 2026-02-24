@@ -1,4 +1,10 @@
-import { readdirSync, readFileSync, mkdirSync, writeFileSync, statSync } from "fs";
+import {
+  readdirSync,
+  readFileSync,
+  mkdirSync,
+  writeFileSync,
+  statSync,
+} from "fs";
 import { copySync } from "fs-extra";
 import { join } from "path";
 
@@ -22,6 +28,7 @@ if (versions.length === 0) {
   process.exit(1);
 }
 
+// eslint-disable-next-line no-console
 console.log("Discovered spec versions:", versions.join(", "));
 
 // Copy spec/{version}/ → generated/{x_y}/ (dots → underscores)
@@ -31,6 +38,7 @@ for (const version of versions) {
   const src = join(SPEC_DIR, version);
   const dest = join(GENERATED_DIR, toDirName(version));
   copySync(src, dest);
+  // eslint-disable-next-line no-console
   console.log(`Copied spec/${version} → generated/${toDirName(version)}`);
 }
 
@@ -57,6 +65,7 @@ ${schemaEntries}
 `;
 
 writeFileSync(join(GENERATED_DIR, "index.ts"), indexContent);
+// eslint-disable-next-line no-console
 console.log("Generated generated/index.ts");
 
 // Patch package.json exports to expose individual schema JSONs from dist/
@@ -77,4 +86,5 @@ pkg.exports = {
 pkg.files = ["dist"];
 
 writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
+// eslint-disable-next-line no-console
 console.log("Updated package.json exports with schema paths");
