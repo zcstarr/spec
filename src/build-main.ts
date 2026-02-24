@@ -1,4 +1,3 @@
-import { build as buildMarkdown } from "./build-legacy-markdown";
 import { build as buildGhpages } from "./build-ghpages";
 
 export const build = async () => {
