@@ -41,6 +41,17 @@ A field (key value pair) where the key name is supplied by the user, and the val
 
 Regular expressions within the OpenRPC specification and tooling is RECOMMENDED to be a [Perl Compatible Regular Expressions](https://www.pcre.org/). That being said, tooling implementers SHOULD adhere to [ECMA-262 6th Edition Regular Expressions](https://www.ecma-international.org/ecma-262/6.0/#sec-regexp-regular-expression-objects).
 
+## Runtime Expression
+
+Runtime expressions allow the user to define an expression which will evaluate to a string once the desired value(s) are known. They are used when the desired value of a link or server can only be constructed at run time.
+This mechanism is used by [Link Objects](#link-object) and [Server Variables](#server-variables).
+
+The runtime expression makes use of [JSON Template Language](https://tools.ietf.org/html/draft-jonas-json-template-language-01) syntax.
+
+The table below provides examples of runtime expressions and examples of their use in a value:
+
+Runtime expressions preserve the type of the referenced value.
+
 ## Specification Extensions
 
 While the OpenRPC Specification tries to accommodate most use cases, additional data can be added to extend the specification at certain points.
@@ -112,6 +123,14 @@ Example OpenRPC documents can be found in the [OpenRPC Examples Repository](http
 # Meta JSON Schema
 
 Validating an OpenRPC document can be accomplished using the OpenRPC MetaSchema. The OpenRPC MetaSchema is based on the [Draft 07 JSON Schema](https://json-schema.org/draft-07/schema), and may be used as a JSON meta-schema for various tooling use. Each field in the Specification MUST be included in the OpenRPC MetaSchema, including all constraints that are possible to model with [Draft 07 JSON Schema](https://json-schema.org/draft-07/schema).
+
+# Schema Object
+
+The Schema Object allows the definition of input and output data types.
+The Schema Objects MUST follow the specifications outline in the [JSON Schema Specification 7](https://json-schema.org/draft-07/json-schema-release-notes.html)
+Alternatively, any time a Schema Object can be used, a [Reference Object](#reference-object) can be used in its place. This allows referencing definitions instead of defining them inline.
+
+This object MAY be extended with [Specification Extensions](#specification-extensions).
 
 # OpenRPC Object
 
