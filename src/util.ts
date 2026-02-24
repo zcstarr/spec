@@ -154,9 +154,9 @@ export const computeTypeKind = (schema: TypeInfo): TypeKind => {
     return { kind: "primitive", type: schema.type };
   }
 
-  // 7. Just a title (likely a $ref that resolved to an object)
+  // 7. Title only with no structural type info: do not infer linkable object
   if (schema.title) {
-    return { kind: "object", title: schema.title };
+    return { kind: "unknown" };
   }
 
   return { kind: "unknown" };
