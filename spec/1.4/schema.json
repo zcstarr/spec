@@ -263,7 +263,7 @@
         },
         "version": {
           "title": "infoObjectVersion",
-          "description": "The version of the OpenRPC document (which is distinct from the [OpenRPC Specification version](#openrpc-version) or the API implementation version).",
+          "description": "The version of the OpenRPC document (which is distinct from the [OpenRPC Specification version](#openrpc-document-openrpc) or the API implementation version).",
           "type": "string"
         },
         "contact": {
