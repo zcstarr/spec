@@ -1,5 +1,5 @@
 {
-  "name": "test-open-rpc-spec",
+  "name": "@open-rpc/spec",
   "version": "1.3.2",
   "description": "The OPEN-RPC Specification",
   "type": "module",

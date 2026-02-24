@@ -94,8 +94,8 @@ export const build = async () => {
       }
     }),
   );
-  // temporarily disable CNAME file
-  // await writeFile(`${buildDir}/CNAME`, "spec.open-rpc.org");
+  // write CNAME file
+  await writeFile(`${buildDir}/CNAME`, "spec.open-rpc.org");
 
   // eslint-disable-next-line no-console
   console.log("building docs complete. docs/ ready to deploy!");
