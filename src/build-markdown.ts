@@ -152,7 +152,7 @@ export const build = async (path: string): Promise<string> => {
   const markdown = renderSections(sections);
 
   const preamble = fs.readFileSync(`./spec/${version}/spec-template.md`, "utf8");
-  const composed_markdown = preamble + markdown;
+  const composed_markdown = `${preamble}\n${markdown}`;
   const withToc = toc.insert(composed_markdown);
   
   const withVersion = replaceVersionComments(withToc, `${version}.x`);
