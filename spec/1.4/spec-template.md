@@ -124,7 +124,7 @@ Example OpenRPC documents can be found in the [OpenRPC Examples Repository](http
 
 Validating an OpenRPC document can be accomplished using the OpenRPC MetaSchema. The OpenRPC MetaSchema is based on the [Draft 07 JSON Schema](https://json-schema.org/draft-07/schema), and may be used as a JSON meta-schema for various tooling use. Each field in the Specification MUST be included in the OpenRPC MetaSchema, including all constraints that are possible to model with [Draft 07 JSON Schema](https://json-schema.org/draft-07/schema).
 
-# Schema Object
+# <span id="jsonschema-object">Schema Object</span>
 
 The Schema Object allows the definition of input and output data types.
 The Schema Objects MUST follow the specifications outline in the [JSON Schema Specification 7](https://json-schema.org/draft-07/json-schema-release-notes.html)
