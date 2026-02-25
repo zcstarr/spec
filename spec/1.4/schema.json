@@ -19,7 +19,7 @@
       "description": "This string MUST be the [semantic version number](https://semver.org/spec/v2.0.0.html) of the [OpenRPC Specification version](#versions) that the OpenRPC document uses. The `openrpc` field SHOULD be used by tooling specifications and clients to interpret the OpenRPC document. This is *not* related to the API [`info.version`](#info-version) string.",
       "title": "openrpc",
       "type": "string",
-      "regex": "^1\\.4\\.\\d+$"
+      "pattern": "^1\\.4\\.\\d+$"
     },
     "info": {
       "$ref": "#/definitions/infoObject"
