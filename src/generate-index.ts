@@ -76,5 +76,5 @@ pkg.exports = {
 
 pkg.files = ["dist"];
 
-writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
+writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
 console.log("Updated package.json exports with schema paths");
